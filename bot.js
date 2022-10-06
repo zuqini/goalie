@@ -5,16 +5,23 @@ const fs           = require('fs');
 const config       = require('./config.json');
 
 const discordToken = process.env.DISCORD_TOKEN;
-const client = new Discord.Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildPresences] });
+const client = new Discord.Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMessages,
+  ],
+});
 
 
 const COMMANDS_DIR = './commands/';
 const EVENTS_DIR = './events/';
 
 if (process.env.NODE_ENV === 'development') {
-  config.prefix += '-dev';
+  config.prefix += 'dev-';
 }
-config.prefix += ' ';
+console.log(`prefix: ${config.prefix}`);
 
 client.config = config;
 client.commands = new Discord.Collection();
@@ -41,12 +48,12 @@ fs.readdir(EVENTS_DIR, (err, files) => {
   if (err) {
     console.error(err);
   } else {
-    console.log(`Loading a total of ${files.length} events.`);
     files.forEach(f => {
       const eventName = f.split(".")[0];
       /* eslint-disable-next-line import/no-dynamic-require, global-require */
       const event = require(`${EVENTS_DIR}${f}`);
       client.on(eventName, event.bind(null, client));
+      console.log(`Loaded Event: ${eventName}. 👌`);
       delete require.cache[require.resolve(`${EVENTS_DIR}${f}`)];
     });
   }
