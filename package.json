@@ -1,0 +1,23 @@
+{
+  "name": "goalie",
+  "version": "1.0.0",
+  "description": "Discord bot that keeps goals",
+  "main": " ",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zuqini/goalie.git"
+  },
+  "author": "Zach (Zu Qi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zuqini/goalie/issues"
+  },
+  "homepage": "https://github.com/zuqini/goalie#readme",
+  "dependencies": {
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3"
+  }
+}
